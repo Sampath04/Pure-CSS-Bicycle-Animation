@@ -1,0 +1,391 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+$bg: #000;
+$cycle: #fff;
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 100vh;
+	background: $bg;
+}
+
+.cycle-container {
+	width: 80%;
+	height: 50%;
+	max-width: 400px;
+	border-bottom: 2px solid $cycle;
+	position: relative;
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+		height: 2px;
+		bottom: -2px;
+		width: 100vw;
+		background: $cycle;
+	}
+	&:before {
+		right: 100%;
+	}
+	&:after {
+		left: 100%;
+	}
+}
+
+.cycle {
+	color: $cycle;
+	width: 100%;
+	height: 100%;
+}
+
+.wheel-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	height: 100%;
+	position: relative;
+}
+
+.wind {
+	position: absolute;
+	width: 40px;
+	height: 50px;
+	right: 100%;
+	bottom: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	animation: wind-style 2s ease-in-out infinite;
+	div {
+		width: 50px;
+		height: 1px;
+		background: $cycle;
+		&:nth-child(1),
+		&:nth-child(3) {
+			transform: rotate(30deg);
+			width: 10px;
+		}
+		&:nth-child(2) {
+			transform: translateX(-100%) rotate(5deg);
+		}
+		&:nth-child(3) {
+			transform: rotate(-5deg);
+		}
+	}
+}
+
+@keyframes wind-style {
+	0% {
+		opacity: 0;
+	}
+	10% {
+		opacity: 1;
+	}
+	15% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	52% {
+		opacity: 0;
+	}
+	60% {
+		opacity: 1;
+	}
+	65% {
+		opacity: 0;
+	}
+	85% {
+		opacity: 1;
+	}
+	86% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.wheel {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	border: 5px solid;
+	position: relative;
+	animation: wheelRotate 1s linear infinite;
+	&.rear-wheel .wheel-center {
+		width: 18px;
+		height: 18px;
+	}
+	.wheel-center {
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		background: $cycle;
+		border-radius: 50%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	.forks {
+		width: 100%;
+		height: 100%;
+		position: relative;
+		div {
+			width: 2px;
+			height: 100%;
+			background: $cycle;
+			border-radius: 5px;
+			position: absolute;
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			&:nth-child(1) {
+				transform: translateX(-50%) rotate(45deg);
+			}
+			&:nth-child(2) {
+				transform: translateX(-50%) rotate(135deg);
+			}
+			&:last-child {
+				width: 100%;
+				height: 2px;
+				top: 50%;
+				left: 0;
+				transform: translateY(-50%);
+			}
+		}
+	}
+}
+
+@keyframes wheelRotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.frame-container {
+	position: absolute;
+	left: 70px;
+	bottom: 70px;
+}
+
+.frame {
+	width: 260px;
+	height: 125px;
+	background: $cycle;
+	clip-path: polygon(50px 0, 220px 0, 130px 125px, 0 125px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.frame-mask {
+	@extend .frame;
+	height: 100%;
+	width: 100%;
+	clip-path: polygon(55px 7px, 207px 7px, 125px 119px, 12px 118px);
+	background: $bg;
+}
+
+.frame-middle-rod {
+	height: 100%;
+	width: 100%;
+	clip-path: polygon(48px 0, 56px 0, 133px 125px, 125px 125px);
+	background: $cycle;
+}
+
+.frame-front-rod {
+	position: absolute;
+	left: 0;
+	top: 0;
+	@extend .frame-middle-rod;
+	clip-path: polygon(211px 0, 220px 0, 261px 125px, 253px 125px);
+}
+
+.pedal-wheel {
+	background: $cycle;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translate(-50%, 50%);
+	animation: pedalRotate 2s linear infinite;
+	&:before,
+	&:after {
+		position: absolute;
+		content: "";
+	}
+	&:before {
+		width: 20px;
+		height: 10px;
+		top: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		background: white;
+	}
+	&:after {
+		width: 3px;
+		height: 50%;
+		background: $bg;
+		left: 50%;
+		top: 50%;
+		transform: translateX(-50%);
+	}
+}
+
+@keyframes pedalRotate {
+	0% {
+		transform: translate(-50%, 50%) rotate(0deg);
+	}
+	100% {
+		transform: translate(-50%, 50%) rotate(360deg);
+	}
+}
+
+.seat-container {
+	position: absolute;
+	left: 85px;
+	bottom: 214px;
+}
+
+.seat {
+	width: 70px;
+	height: 11px;
+	background: $cycle;
+	position: relative;
+	&:before {
+		position: absolute;
+		content: "";
+		width: 9px;
+		height: 20px;
+		left: 42%;
+		top: 100%;
+		transform: skewX(30deg);
+		background: $cycle;
+	}
+}
+
+.handle-container {
+	position: absolute;
+	right: 122px;
+	bottom: 243px;
+}
+
+.handle {
+	@extend .seat;
+	height: 5px;
+	width: 30px;
+	transform: rotate(-25deg);
+	&:before {
+		height: 60px;
+		left: 48%;
+		top: 0;
+		transform: skewX(-7deg);
+		width: 6px;
+	}
+}
+
+.chain {
+	position: absolute;
+	left: 0;
+	top: 100%;
+	transform: translateY(-50%);
+	width: 130px;
+	height: 50px;
+	&:before,
+	&:after {
+		position: absolute;
+		content: "";
+		width: 100%;
+		height: 3px;
+		background: $cycle;
+		left: 0;
+	}
+	&:before {
+		top: 7px;
+		transform: rotate(-5deg);
+	}
+	&:after {
+		bottom: 11px;
+		transform: rotate(10deg);
+	}
+}
+
+.road-container {
+	width: 100%;
+	margin-top: 20px;
+	display: flex;
+	justify-content: space-between;
+	animation: road-grass 6s linear infinite;
+	position: relative;
+	left: 105%;
+	.grass div {
+		background: $cycle;
+		width: 10px;
+		height: 1px;
+		position: relative;
+		&:before,
+		&:after {
+			position: absolute;
+			content: "";
+			width: 100%;
+			height: 100%;
+			left: 50%;
+			top: 50%;
+			background: inherit;
+			transform: translate(-50%, -50%) rotate(45deg);
+		}
+		&:after {
+			transform: translate(-50%, -50%) rotate(-45deg);
+		}
+		&:nth-child(2) {
+			left: 30px;
+			top: 20px;
+		}
+		&:nth-child(3) {
+			left: -20px;
+			top: 15px;
+		}
+	}
+}
+
+@keyframes road-grass {
+	0% {
+		left: 105%;
+	}
+	80% {
+		left: -105%;
+	}
+	85% {
+		opacity: 1;
+	}
+	86% {
+		opacity: 0;
+	}
+	87% {
+		left: -105%;
+	}
+	95% {
+		left: 105%;
+	}
+	96% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
